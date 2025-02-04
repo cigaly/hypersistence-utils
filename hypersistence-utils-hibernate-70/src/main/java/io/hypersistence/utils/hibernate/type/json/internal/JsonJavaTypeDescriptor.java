@@ -7,8 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.dialect.OracleDialect;
 import org.hibernate.engine.jdbc.BinaryStream;
 import org.hibernate.engine.jdbc.CharacterStream;
-import org.hibernate.engine.jdbc.internal.BinaryStreamImpl;
+import org.hibernate.engine.jdbc.internal.ArrayBackedBinaryStream;
 import org.hibernate.engine.jdbc.internal.CharacterStreamImpl;
+import org.hibernate.models.spi.MemberDetails;
+import org.hibernate.models.spi.TypeDetails;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.*;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
@@ -73,12 +75,17 @@ public class JsonJavaTypeDescriptor extends AbstractClassJavaType<Object> implem
     public void setParameterValues(Properties parameters) {
         Type type = null;
         final Object parameterType = parameters.get(PARAMETER_TYPE);
-        if (parameterType instanceof ParameterType) {
-            type = ((ParameterType) parameterType).getReturnedJavaType();
-        } else if (parameterType instanceof String) {
-            type = ReflectionUtils.getClass((String) parameterType);
-        }
-        if (type == null) {
+            if(parameterType instanceof ParameterType) {
+            final MemberDetails xProperty = (MemberDetails) parameters.get(XPROPERTY);
+            if (xProperty.getType().getTypeKind() == TypeDetails.Kind.TYPE_VARIABLE) {
+                type = ((ParameterType) parameterType).getReturnedClass();
+            } else {
+                type = ((ParameterType) parameterType).getReturnedJavaType();
+            }
+            } else if(parameterType instanceof String) {
+                type = ReflectionUtils.getClass((String) parameterType);
+            }
+        if(type == null) {
             throw new HibernateException("Could not resolve property type!");
         }
         setPropertyClass(type);
@@ -143,7 +150,7 @@ public class JsonJavaTypeDescriptor extends AbstractClassJavaType<Object> implem
             byte[].class.isAssignableFrom(type)) {
             String stringValue = (value instanceof String) ? (String) value : toString(value);
 
-            return (X) new BinaryStreamImpl(DataHelper.extractBytes(new ByteArrayInputStream(stringValue.getBytes())));
+            return (X) new ArrayBackedBinaryStream(DataHelper.extractBytes(new ByteArrayInputStream(stringValue.getBytes())));
         } else if (Blob.class.isAssignableFrom(type)) {
             String stringValue = (value instanceof String) ? (String) value : toString(value);
 

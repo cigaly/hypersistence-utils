@@ -341,16 +341,16 @@ public class PostgreSQLSpringRangeType extends ImmutableType<Range> implements D
         lower.getValue().ifPresent(sb::append);
         sb.append(",");
         upper.getValue().ifPresent(sb::append);
-        sb.append(upper.isBounded() ? upper.isInclusive() ? "]" : ")" : ")");
+        sb.append(upper.isBounded() ? upper.isInclusive() ? "]": ")": ")");
 
         return sb.toString();
     }
 
     private Class rangeClass() {
-        if (type instanceof ParameterizedType) {
-            Type[] types = ((ParameterizedType) type).getActualTypeArguments();
-            return (Class) types[0];
+            if (type instanceof ParameterizedType) {
+                Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+                return (Class) types[0];
+            }
+            return null;
         }
-        return null;
-    }
 }

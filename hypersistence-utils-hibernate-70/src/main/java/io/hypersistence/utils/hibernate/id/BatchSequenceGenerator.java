@@ -192,7 +192,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
 
       Class<?> type = getType(annotatedMember);
       this.identifierExtractor = IdentifierExtractor.getIdentifierExtractor(type);
-      this.sequenceStructure = this.buildSequenceStructure(type, sequenceName, jdbcEnvironment);
+      this.sequenceStructure = this.buildSequenceStructure(type, sequenceName);
     }
 
     /**
@@ -215,7 +215,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
 
             Class<?> numberType = type.getReturnedClass();
             this.identifierExtractor = IdentifierExtractor.getIdentifierExtractor(numberType);
-            this.sequenceStructure = this.buildSequenceStructure(numberType, sequenceName, jdbcEnvironment);
+            this.sequenceStructure = this.buildSequenceStructure(numberType, sequenceName);
 
         }
     }
@@ -285,8 +285,8 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
         + "SELECT " + nextValString + " FROM t";
     }
 
-    private SequenceStructure buildSequenceStructure(Class<?> type, QualifiedName sequenceName, JdbcEnvironment jdbcEnvironment) {
-        return new SequenceStructure(jdbcEnvironment, "orm", sequenceName, 1, 1, type);
+    private SequenceStructure buildSequenceStructure(Class<?> type, QualifiedName sequenceName) {
+        return new SequenceStructure("orm", sequenceName, 1, 1, type);
     }
 
 	/**

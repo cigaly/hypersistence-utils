@@ -85,7 +85,7 @@ public class PostgreSQLRangeType extends ImmutableType<Range> implements Dynamic
                 return Range.localDateRange(value);
             default:
                 throw new HibernateException(
-                        new IllegalStateException("The range type [" + type + "] is not supported!")
+                    new IllegalStateException("The range type [" + type + "] is not supported!")
                 );
         }
     }
@@ -121,7 +121,7 @@ public class PostgreSQLRangeType extends ImmutableType<Range> implements Dynamic
         }
 
         throw new HibernateException(
-                new IllegalStateException("The class [" + clazz.getName() + "] is not supported!")
+            new IllegalStateException("The class [" + clazz.getName() + "] is not supported!")
         );
     }
 
@@ -140,27 +140,27 @@ public class PostgreSQLRangeType extends ImmutableType<Range> implements Dynamic
         if (sequence != null) {
             String stringValue = (String) sequence;
             Class clazz = rangeClass();
-            if (clazz != null) {
-                if (Integer.class.isAssignableFrom(clazz)) {
+            if(clazz != null) {
+                if(Integer.class.isAssignableFrom(clazz)) {
                     return Range.integerRange(stringValue);
                 }
-                if (Long.class.isAssignableFrom(clazz)) {
+                if(Long.class.isAssignableFrom(clazz)) {
                     return Range.longRange(stringValue);
                 }
-                if (BigDecimal.class.isAssignableFrom(clazz)) {
+                if(BigDecimal.class.isAssignableFrom(clazz)) {
                     return Range.bigDecimalRange(stringValue);
                 }
-                if (LocalDateTime.class.isAssignableFrom(clazz)) {
+                if(LocalDateTime.class.isAssignableFrom(clazz)) {
                     return Range.localDateTimeRange(stringValue);
                 }
-                if (ZonedDateTime.class.isAssignableFrom(clazz)) {
+                if(ZonedDateTime.class.isAssignableFrom(clazz)) {
                     return Range.zonedDateTimeRange(stringValue);
                 }
-                if (LocalDate.class.isAssignableFrom(clazz)) {
+                if(LocalDate.class.isAssignableFrom(clazz)) {
                     return Range.localDateRange(stringValue);
                 }
                 throw new HibernateException(
-                        new IllegalStateException("The range type [" + type + "] is not supported!")
+                    new IllegalStateException("The range type [" + type + "] is not supported!")
                 );
             }
         }

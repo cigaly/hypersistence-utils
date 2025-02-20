@@ -143,7 +143,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
 
     /**
      * Indicates the name of the sequence to use, mandatory.
-     *
+     * 
      * @deprecated use {@link BatchSequence}
      */
     @Deprecated
@@ -151,7 +151,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
 
     /**
      * Indicates how many sequence values to fetch at once. The default value is {@link #DEFAULT_FETCH_SIZE}.
-     *
+     * 
      * @deprecated use {@link BatchSequence}
      */
     @Deprecated
@@ -180,7 +180,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
 
     /**
      * Called when {@link BatchSequence} is used.
-     *
+     * 
      * @param annotation meta annotation for configuration
      */
     public BatchSequenceGenerator(BatchSequence annotation,
@@ -189,7 +189,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
       JdbcEnvironment jdbcEnvironment = context.getServiceRegistry().getService(JdbcEnvironment.class);
       this.sequenceName = determineSequenceName(annotation, jdbcEnvironment);
       this.fetchSize = annotation.fetchSize();
-
+      
       Class<?> type = getType(annotatedMember);
       this.identifierExtractor = IdentifierExtractor.getIdentifierExtractor(type);
       this.sequenceStructure = this.buildSequenceStructure(type, sequenceName);
@@ -209,7 +209,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
         if (this.sequenceName == null) {
             // not initialized in constructor
             JdbcEnvironment jdbcEnvironment = serviceRegistry.getService(JdbcEnvironment.class);
-
+            
             this.sequenceName = determineSequenceName(params, jdbcEnvironment);
             this.fetchSize = determineFetchSize(params);
 
@@ -238,7 +238,7 @@ public class BatchSequenceGenerator implements BulkInsertionCapableIdentifierGen
             .getSelectSequenceNextValString(
                 context.format(this.sequenceName)
             );
-
+		
         this.identifierPool = IdentifierPool.empty();
         this.sequenceStructure.initialize(context);
 

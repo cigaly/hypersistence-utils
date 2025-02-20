@@ -25,17 +25,17 @@ import java.util.function.Function;
 public class PostgreSQLSpringRangeType extends ImmutableType<Range> implements DynamicParameterizedType {
 
     private static final Range<Integer> EMPTY_INT_RANGE = Range.rightOpen(Integer.MIN_VALUE, Integer.MIN_VALUE);
-
+    
     private static final Range<Long> EMPTY_LONG_RANGE = Range.rightOpen(Long.MIN_VALUE, Long.MIN_VALUE);
-
+    
     private static final Range<BigDecimal> EMPTY_BIGDECIMAL_RANGE = Range.rightOpen(BigDecimal.ZERO, BigDecimal.ZERO);
-
+    
     private static final Range<LocalDateTime> EMPTY_LOCALDATETIME_RANGE = Range.rightOpen(LocalDateTime.MIN, LocalDateTime.MIN);
-
+    
     private static final Range<OffsetDateTime> EMPTY_OFFSETDATETIME_RANGE = Range.rightOpen(OffsetDateTime.MIN, OffsetDateTime.MIN);
-
+    
     private static final Range<ZonedDateTime> EMPTY_ZONEDDATETIME_RANGE = Range.rightOpen(OffsetDateTime.MIN.toZonedDateTime(), OffsetDateTime.MIN.toZonedDateTime());
-
+    
     private static final Range<LocalDate> EMPTY_DATE_RANGE = Range.rightOpen(LocalDate.MIN, LocalDate.MIN);
 
     private static final DateTimeFormatter LOCAL_DATE_TIME = new DateTimeFormatterBuilder()
@@ -69,7 +69,7 @@ public class PostgreSQLSpringRangeType extends ImmutableType<Range> implements D
         super(Range.class);
         this.elementType = elementType;
     }
-
+    
     @Override
     protected Range get(ResultSet rs, int position, SharedSessionContractImplementor session, Object owner) throws SQLException {
         Object pgObject = rs.getObject(position);
@@ -214,7 +214,7 @@ public class PostgreSQLSpringRangeType extends ImmutableType<Range> implements D
         String lowerStr = str.substring(1, delim);
         String upperStr = str.substring(delim + 1, str.length() - 1);
 
-        Range.Bound<T> lowerBound = Range.Bound.unbounded();
+        Range.Bound<T> lowerBound =  Range.Bound.unbounded();
         Range.Bound<T> upperBound = Range.Bound.unbounded();
 
         if (!lowerStr.isEmpty()) {

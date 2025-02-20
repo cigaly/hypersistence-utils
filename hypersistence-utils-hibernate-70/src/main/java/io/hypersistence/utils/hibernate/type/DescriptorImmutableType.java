@@ -56,7 +56,7 @@ public abstract class DescriptorImmutableType<T, JDBC extends JdbcType, JAVA ext
 
     @Override
     protected void set(PreparedStatement st, T value, int index, SharedSessionContractImplementor session) throws SQLException {
-        nullSafeSet(st, value, index, session);
+        nullSafeSet(st, (Object) value, index, session);
     }
 
     @Override

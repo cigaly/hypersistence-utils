@@ -31,15 +31,7 @@ public class ObjectMapperWrapper implements Serializable {
     private static final ObjectMapper OBJECT_MAPPER = newObjectMapper();
 
     private static ObjectMapper newObjectMapper() {
-        JsonMapper.Builder objectMapper = (ReflectionUtils.getClassOrNull("com.fasterxml.jackson.module.kotlin.KotlinModule") != null) ?
-            ReflectionUtils.invokeStaticMethod(
-                ReflectionUtils.getMethod(
-                    ReflectionUtils.getClass("io.hypersistence.utils.hibernate.type.util.KotlinObjectMapperBuilder"),
-                    "build"
-                )
-            ) :
-            JsonMapper.builder();
-        return objectMapper
+        return JsonMapper.builder()
                 .findAndAddModules()
                 .addModule(
                     new SimpleModule()
